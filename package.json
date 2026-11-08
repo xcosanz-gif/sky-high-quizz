@@ -1,0 +1,13 @@
+{
+  "name": "sky-high-quiz",
+  "version": "1.0.0",
+  "description": "Multiplayer Tower Builder Quiz Game featuring Nuruddin Al-Raniri theme",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}

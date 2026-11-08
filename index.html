@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sky High Quiz - Tower Builder</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- LOBBY SCREEN -->
+    <div id="lobby-screen" class="card">
+      <h1>🏰 Sky High Quiz</h1>
+      <p class="subtitle">Membangun Menara di Atas Awan - Edisi Nuruddin Al-Raniri</p>
+
+      <div class="form-group">
+        <label for="player-name">Nama Pemain:</label>
+        <input type="text" id="player-name" placeholder="Masukkan nama Anda..." maxlength="12">
+      </div>
+
+      <div class="action-buttons">
+        <button id="btn-create" class="btn btn-primary">Buat Room Baru</button>
+        <div class="divider"><span>atau</span></div>
+        <div class="join-box">
+          <input type="text" id="room-code-input" placeholder="6-digit Kode Room" maxlength="6">
+          <button id="btn-join" class="btn btn-secondary">Gabung Room</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROOM WAITING SCREEN -->
+    <div id="waiting-screen" class="card hidden">
+      <h2>Lobby Permaianan</h2>
+      <div class="room-info">
+        <span>Kode Room: <strong id="display-room-code">------</strong></span>
+      </div>
+
+      <div id="player-list" class="player-list"></div>
+
+      <div class="lobby-controls">
+        <button id="btn-ready" class="btn btn-warning">Ready</button>
+        <button id="btn-start" class="btn btn-success hidden">Mulai Game (Host)</button>
+      </div>
+    </div>
+
+    <!-- GAMEPLAY SCREEN -->
+    <div id="game-screen" class="hidden">
+      <!-- HEADER GAME -->
+      <div class="game-header">
+        <div class="timer-box">⏱️ Waktu: <span id="game-timer">180</span>s</div>
+        <div id="attack-banner" class="attack-banner hidden"></div>
+      </div>
+
+      <!-- MAIN CANVAS CONTAINERS -->
+      <div class="canvas-container">
+        <canvas id="towerCanvas" width="900" height="350"></canvas>
+      </div>
+
+      <!-- QUIZ & ATTACK CONTROL PANEL -->
+      <div class="game-controls">
+        <!-- QUIZ BOX -->
+        <div class="quiz-box card">
+          <div class="quiz-meta">
+            <span id="q-counter">Soal 1/20</span>
+            <span id="streak-counter" class="streak-badge">Streak: 0 🔥</span>
+          </div>
+          <h3 id="question-text">Memuat Soal...</h3>
+          <div id="options-container" class="options-grid"></div>
+        </div>
+
+        <!-- ATTACK PANEL -->
+        <div id="attack-panel" class="attack-panel card hidden">
+          <h3>⚡ Fitur Serangan Aktif!</h3>
+          <p>Pilih target dan jenis serangan:</p>
+          <div id="target-selector" class="target-selector"></div>
+          <div class="attack-actions">
+            <button id="btn-attack-wind" class="btn btn-danger">🌪️ Angin Puyuh (-1 Blok)</button>
+            <button id="btn-attack-quake" class="btn btn-warning">🫨 Gempa Bumi (5s Shake)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME OVER MODAL -->
+    <div id="gameover-modal" class="modal hidden">
+      <div class="modal-content card">
+        <h2>🏆 HASIL PERTANDINGAN 🏆</h2>
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Peringkat</th>
+              <th>Nama</th>
+              <th>Tinggi Menara</th>
+              <th>Skor Poin</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-body"></tbody>
+        </table>
+        <button id="btn-back-lobby" class="btn btn-primary" onclick="location.reload()">Kembali ke Lobby</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
